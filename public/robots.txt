@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://fundevz.xyz/sitemap.xml
+Crawl-delay: 1
