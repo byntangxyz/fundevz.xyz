@@ -1,0 +1,58 @@
+---
+title: "Make Home Server with STB HG680P"
+description: "Learn how to set up a cheap home server using HG680P V2 with Armbian linux"
+date: "2025-08-23"
+tags: ["Server", "Cheap", "Armbian", "HG680P"]
+---
+
+Okay as broke student who has ambitious desire, when Im doing backend things I feel that I need my own server. And somehow i found this great video:
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/ycKbRt_MY3s?si=6JO5xmgAXXNArKrt"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerPolicy="strict-origin-when-cross-origin"
+  allowFullScreen
+></iframe>
+
+Im interested with that video, so I do it.
+
+## First, we need to buy these components:
+
+- [STB HG680P V2 Openwrt](https://tk.tokopedia.com/ZSStjVQTF/)
+- [Micro SD Card 16GB](https://tk.tokopedia.com/ZSABxahN3/)
+
+The Micro SD card should have at least 8GB storage, better more. You need to plug the micro SD card to your computers. If your computer doesn't have micro SD reader or maybe only has SD card reader, I prefer to buy an adaptor. All of the budget cost arround ~250.000 rupiah, so its a good idea for broke student like me.
+
+## The next steps is setup the Linux armbian installation:
+
+Okay you need to download all of this file that I've prepared.
+
+[Linux Armbian ISO](https://download2279.mediafire.com/ug0s8gytc4wgjPUXToQBYjtyJbLujDNDYfsoDxlbbbol9r8xc8qEj_z6eHWYqlHYVp44khOA9fhMyXvBwS_Zlh86qNdL-HkFF77KV9gKPsEzQ6dIshg6cJgI3reM3dtSuA8_9kVQ_kH0D0KnPdKxFEFi2Y8CV9vCQpU_8ZvMnb09dyr3/bqf8f0ws6zvsf02/Armbian_25.05.0_amlogic_s905x_noble_6.1.137_server_2025.05.05.img.gz)
+
+[Balena Etcher](https://etcher.balena.io/#download-etcher) or Rufus
+
+Why using Linux Armbian? Well basicly HG680P is based on [Armlogic](https://www.armbian.com/soc/amlogic/) CPU. But originaly HG680P is not permitted to get Linux OS, thats way you need to buy [Openwrt](https://openwrt.org/) version. Actually we use OpenWRT only to be overwritten by Armbian:v
+
+Okay after downloading, we need to burn ISO Armbian on micro SD Card using Balena Etcher or rufus like usually we burn image.
+
+Await the process finish.
+
+After finish burning, plug the micro SD card on micro SD card slot HG680P. Also dont forget to plug ethernet cable, we need to detect the IP address. Boot the HG680P.
+
+Then check on your router, what is your "armbian" (default) IP address.
+
+![STB-1 Image](/post/stb-1.png)
+
+After you find the IP Address, remote it using ssh on your computer. Default user is `root` and password is `1234`. Follow the installation guide and we're done.
+
+After finish Installing dont forget to `sudo apt update && upgrade -y`
+
+![STB-2 Image](/post/stb-2.png)
+
+## What is the next step?
+
+Actually we've done here, so you're free do to anything next. But don't forget, it is a lowend CPU so it doesn't mean can run everything. Thats it, I love this project so much and hope you enjoyed it! See y'a

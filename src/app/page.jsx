@@ -20,6 +20,7 @@ import CardSwap, { Card } from "@/components/ui/CardSwap";
 import ShinyText from "@/components/ui/ShinyText";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import ContactForm from "@/components/ContactForm";
+import Footer from "@/components/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -281,7 +282,7 @@ export default function Home() {
             <div className="absolute top-12 left-0 w-full h-0.5 bg-secondary">
               <div
                 ref={timelineLineRef}
-                className="h-full bg-gradient-to-r from-primary to-purple-500"
+                className="h-full bg-gradient-to-r from-primary to-blue-500"
               />
             </div>
 
@@ -322,7 +323,7 @@ export default function Home() {
             <div className="absolute left-6 top-0 w-0.5 h-full bg-secondary">
               <div
                 ref={timelineLineRef}
-                className="w-full bg-gradient-to-b from-primary to-purple-500"
+                className="w-full bg-gradient-to-b from-primary to-blue-500"
               />
             </div>
 
@@ -604,6 +605,8 @@ export default function Home() {
           </p>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import { Inter, Geist_Mono, Gelasio, Sora, Chewy } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import BackToTop from "@/components/BackToTop";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -118,6 +119,7 @@ export default function RootLayout({ children }) {
       >
         <Navbar />
         {children}
+        <BackToTop />
       </body>
     </html>
   );

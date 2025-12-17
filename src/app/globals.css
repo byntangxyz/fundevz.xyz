@@ -152,3 +152,70 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Syntax Highlighting Styles */
+[data-rehype-pretty-code-fragment] {
+  @apply relative;
+}
+
+[data-rehype-pretty-code-fragment] pre {
+  @apply overflow-x-auto py-4 px-0;
+}
+
+[data-rehype-pretty-code-fragment] code {
+  @apply grid;
+  counter-reset: line;
+}
+
+[data-rehype-pretty-code-fragment] code[data-line-numbers] {
+  counter-reset: line;
+}
+
+[data-rehype-pretty-code-fragment]
+  code[data-line-numbers]
+  > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply inline-block w-8 mr-4 text-right text-gray-500;
+}
+
+[data-rehype-pretty-code-fragment] code > [data-line] {
+  @apply px-4 border-l-2 border-transparent;
+}
+
+[data-rehype-pretty-code-fragment]
+  code[data-line-numbers-max-digits="2"]
+  > [data-line]::before {
+  @apply w-8;
+}
+
+[data-rehype-pretty-code-fragment]
+  code[data-line-numbers-max-digits="3"]
+  > [data-line]::before {
+  @apply w-12;
+}
+
+[data-rehype-pretty-code-fragment] [data-highlighted-line] {
+  @apply bg-white/5 border-l-primary;
+}
+
+[data-rehype-pretty-code-fragment] [data-highlighted-chars] {
+  @apply bg-primary/20 border-b-2 border-primary rounded px-1;
+}
+
+[data-rehype-pretty-code-fragment] [data-chars-id] {
+  @apply border-b-2 p-1;
+}
+
+/* Copy Button Styles */
+[data-rehype-pretty-code-fragment] {
+  @apply relative;
+}
+
+[data-rehype-pretty-code-fragment]:hover button {
+  @apply opacity-100;
+}
+
+[data-rehype-pretty-code-fragment] button {
+  @apply opacity-0 transition-opacity duration-200;
+}

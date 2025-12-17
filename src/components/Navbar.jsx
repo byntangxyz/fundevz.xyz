@@ -209,7 +209,7 @@ export default function Navbar() {
           <li>
             <Link
               onClick={() => setOpen(false)}
-              href="#home"
+              href="/#home"
               className="hover:text-blue-700"
             >
               Home
@@ -218,7 +218,7 @@ export default function Navbar() {
           <li>
             <Link
               onClick={() => setOpen(false)}
-              href="#about"
+              href="/#about"
               className="hover:text-blue-700"
             >
               About
@@ -245,7 +245,7 @@ export default function Navbar() {
           <li>
             <Link
               onClick={() => setOpen(false)}
-              href="#contact"
+              href="/#contact"
               className="hover:text-blue-700"
             >
               Contact

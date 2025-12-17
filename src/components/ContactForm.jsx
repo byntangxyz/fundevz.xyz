@@ -56,11 +56,11 @@ export default function ContactForm() {
   return (
     <div className="relative">
       {/* Decorative gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-purple-500/5 to-transparent rounded-3xl blur-3xl -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-blue-500/5 to-transparent rounded-3xl blur-3xl -z-10" />
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-6 relative bg-secondary/30 backdrop-blur-sm p-8 rounded-2xl border border-border/50 shadow-xl"
+        className="space-y-4 md:space-y-6 relative bg-secondary/30 backdrop-blur-sm p-6 md:p-8 rounded-2xl border border-border/50 shadow-xl"
       >
         {/* Name Input */}
         <div className="group">
@@ -159,9 +159,9 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === "loading"}
-          className="group w-full px-6 py-4 rounded-xl bg-gradient-to-r from-primary to-purple-600 text-white font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none flex items-center justify-center gap-3 relative overflow-hidden"
+          className="group w-full px-6 py-4 rounded-xl bg-gradient-to-r from-primary to-blue-600 text-white font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none flex items-center justify-center gap-3 relative overflow-hidden"
         >
-          <span className="absolute inset-0 bg-gradient-to-r from-purple-600 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           <span className="relative flex items-center gap-3">
             {status === "loading" ? (
               <>
