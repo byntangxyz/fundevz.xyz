@@ -399,14 +399,14 @@ export default function Home() {
         itemType="https://schema.org/CreativeWork"
       >
         <div className="mb-16">
-          <h1 className="text-4xl md:text-5xl font-semibold leading-tight text-center mb-4">
+          <h3 className="text-4xl md:text-5xl font-semibold leading-tight text-center mb-4">
             <ShinyText
               text="Featured Projects"
               disabled={false}
               speed={3}
               className="animate-shine"
             />
-          </h1>
+          </h3>
           <p className="text-center text-lg text-muted-foreground max-w-2xl mx-auto">
             Explore a selection of my projects that demonstrate my skills in
             fullstack development, devops, networking, and IoT.

@@ -37,7 +37,7 @@ export const metadata = {
     template: "%s | Bintang Murtifandy",
   },
   description:
-    "Fullstack developer specializing in web applications, DevOps, networking, and IoT solutions. Expert in React, Next.js, Node.js, Python, and Docker. Available for freelance projects.",
+    "Fullstack developer specializing in web applications, DevOps, networking, and IoT solutions.",
   keywords: [
     "Fullstack Developer",
     "Web Developer",
@@ -72,7 +72,7 @@ export const metadata = {
     url: "https://fundevz.xyz",
     title: "Bintang Murtifandy - Fullstack Developer & DevOps Enthusiast",
     description:
-      "Fullstack developer specializing in web applications, DevOps, networking, and IoT solutions. Building innovative digital experiences.",
+      "Fullstack developer specializing in web applications, DevOps, networking, and IoT solutions.",
     siteName: "Bintang Murtifandy Portfolio",
     images: [
       {
@@ -112,8 +112,45 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Bintang Murtifandy",
+    url: "https://fundevz.xyz",
+    image: "https://fundevz.xyz/og-image.png",
+    sameAs: [
+      "https://github.com/byntangxyz",
+      "https://linkedin.com/in/bintangmurtifandy",
+      "https://instagram.com/byntangxyz",
+    ],
+    jobTitle: "Fullstack Developer",
+    worksFor: {
+      "@type": "Organization",
+      name: "Freelance",
+    },
+    description:
+      "Fullstack developer specializing in web applications, DevOps, networking, and IoT solutions.",
+    knowsAbout: [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Python",
+      "Docker",
+      "DevOps",
+      "IoT",
+    ],
+  };
+
   return (
     <html lang="en" className="scroll-smooth no-scrollbar dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${geistMono.variable} ${gelasio.variable} ${sora.variable} ${chewy.variable} antialiased `}
       >
