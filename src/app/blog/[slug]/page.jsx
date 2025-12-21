@@ -39,8 +39,15 @@ const components = {
     );
   },
   pre: ({ children, ...props }) => {
-    // Extract the code text from children
-    const codeText = children?.props?.children || "";
+    // Extract text content recursively
+    const extractText = (node) => {
+      if (typeof node === "string") return node;
+      if (Array.isArray(node)) return node.map(extractText).join("");
+      if (node?.props?.children) return extractText(node.props.children);
+      return "";
+    };
+
+    const codeText = extractText(children);
 
     return (
       <div className="relative group">
@@ -96,6 +103,23 @@ const components = {
         </span>
       )}
     </span>
+  ),
+  iframe: ({ src, title, ...props }) => (
+    <div
+      className="relative w-full my-8 overflow-hidden rounded-xl"
+      style={{ paddingBottom: "56.25%" }}
+    >
+      {/* eslint-disable-next-line jsx-a11y/iframe-has-title */}
+      <iframe
+        src={src}
+        title={title || "Embedded content"}
+        className="absolute top-0 left-0 w-full h-full border-0"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        {...props}
+      />
+    </div>
   ),
 };
 

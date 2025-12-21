@@ -1,0 +1,176 @@
+---
+title: "Reversed Proxy with FRP"
+description: "Learn how to set up a reversed proxy using FRP (Fast Reverse Proxy) for secure and efficient access to internal services."
+date: "2025-12-21"
+tags: ["Server", "FRP", "Reversed Proxy", "Proxy"]
+---
+
+Do your internet provider didn't give you a public IP address? Or maybe you want to access your home server from outside your local network without exposing it directly to the internet? Using a reversed proxy with FRP (Fast Reverse Proxy) is a great solution for this problem. FRP allows you to securely expose a local server behind a NAT or firewall to the internet.
+
+![FRP Topology](/post/frp-top.png)
+
+## What is Reversed Proxy?
+
+A reversed proxy is a server that sits between client devices and a web server, forwarding client requests to the appropriate backend server. In the case of FRP, it allows you to expose services running on your local network to the internet without needing a public IP address. Why we're doing this? Because many ISPs assign private IP addresses to residential customers, making it difficult to host services accessible from the internet. However, paying a VPS (Virtual Private Server) with a public IP address is more cheaper than paying for a static public IP from your ISP. It doesn't need to be expensive VPS, even the cheapest VPS plan is enough to run FRP server, 1vCPU with 1GB RAM is more than enough.
+
+## Setting Up Fast Reverse Proxy (FRP)
+
+To set up FRP, you'll need to install both the FRP server and client. The server will be hosted on a machine with a public IP address (like a VPS), while the client will run on your local machine or home server.
+
+### Step 1: Install FRPS on the Server (VPS)
+
+1. Download the latest FRP release from the [official GitHub repository](https://github.com/fatedier/frp).
+
+```bash
+cd /opt
+wget <FRP_DOWNLOAD_URL>
+```
+
+select the appropriate download URL for your server's architecture (e.g., Linux AMD64). For example im using [Linux AMD64 version 0.65.0](https://github.com/fatedier/frp/releases/download/v0.65.0/frp_0.65.0_linux_amd64.tar.gz)
+
+2. Extract the downloaded archive and navigate to the extracted directory.
+
+```bash
+tar -xzf frp-0.65.0-linux-amd64.tar.gz
+mv frp-0.65.0-linux-amd64 frp
+cd frp
+```
+
+3. Modify the `frps.toml` configuration file to set up the server.
+
+```toml
+bindPort = 7000
+
+# Optional dashboard
+webServer.addr = "0.0.0.0"
+webServer.port = 7500
+webServer.user = "admin"
+webServer.password = "yourpassword"
+
+# Auth
+auth.method = "token"
+auth.token = "base64_encoded_token_string"
+
+```
+
+4. Allow the necessary ports through your server's firewall.
+
+```bash
+sudo ufw allow 7000/tcp
+sudo ufw allow 7500/tcp
+sudo ufw reload
+```
+
+5. Start the FRP server.
+
+```bash
+./frps -c ./frps.toml
+```
+
+6. Set up FRP server to run as a service for automatic startup.
+
+```bash
+sudo nano /etc/systemd/system/frps.service
+```
+
+`frps.service` content:
+
+```ini
+[Unit]
+Description=FRP Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/frp/frps -c /opt/frp/frps.toml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+systemctl daemon-reexec
+systemctl enable frps
+systemctl start frps
+systemctl status frps
+```
+
+### Step 2: Install FRPC on the Client (Your Server without Public IP)
+
+1. Download the same FRP release on your local server or home server.
+
+```bash
+cd /opt
+wget <FRP_DOWNLOAD_URL>
+```
+
+2. Extract the downloaded archive and navigate to the extracted directory (similar to server step).
+
+```bash
+tar -xzf frp-0.65.0-linux-amd64.tar.gz
+mv frp-0.65.0-linux-amd64 frp
+cd frp
+```
+
+3. Modify the `frpc.toml` configuration file to set up the client.
+
+```toml
+serverAddr = "YOUR_VPS_PUBLIC_IP"
+serverPort = 7000
+
+auth.method = "token"
+auth.token = "same_base64_encoded_token_string_as_server"
+
+[[proxies]]
+name = "ssh home server"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 22
+remotePort = 6000
+
+```
+
+You can add more proxies as needed, such as HTTP, HTTPS, or other TCP/UDP services. Im recommend to use different remotePort for each service, dont use default port like 22 (SSH) or 80 (HTTP) to avoid conflict and for your safety.
+
+4. Start the FRP client.
+
+```bash
+./frpc -c ./frpc.toml
+```
+
+Make sure the client can connect to the server without issues. it should show a successful connection message in the terminal.
+
+5. Set up FRP client to run as a service for automatic startup.
+
+```bash
+sudo nano /etc/systemd/system/frpc.service
+```
+
+`frpc.service` content:
+
+```ini
+[Unit]
+Description=FRP Client
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/frp/frpc -c /opt/frp/frpc.toml
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+## Accessing Your Services
+
+Once both the server and client are running, you can access your local services from outside your network using the VPS's public IP address and the specified remote ports. For example, to SSH into your home server, you would use:
+
+```bash
+ssh -p 6000 user@YOUR_VPS_PUBLIC_IP
+```
+
+You can also monitor the FRP server dashboard by navigating to `http://YOUR_VPS_PUBLIC_IP:7500` in your web browser. Use the credentials you set in the `frps.toml` file to log in.
+
+Thats it! You've successfully set up a reversed proxy using FRP to access your home server securely from the internet. Enjoy your newly accessible services!
